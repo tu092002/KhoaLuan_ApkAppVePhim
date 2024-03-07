@@ -11,17 +11,42 @@
         <item
             android:id="@+id/btnAdminPhim"
             android:icon="@drawable/baseline_add_24"
-            android:title="AdminPhim"/>
+            android:title="QUẢN LÝ PHIM"
+            />
 
         <item
             android:id="@+id/btnAdminRap"
             android:icon="@drawable/baseline_share_24"
-            android:title="AdminRap"/>
+            android:title="QUẢN LÝ RẠP PHIM"
+          />
 
         <item
             android:id="@+id/btnDangKyPage"
             android:icon="@drawable/baseline_info_24"
-            android:title="DangKy"/>
+            android:title="ĐĂNG KÝ"
+           />
+        <item
+            android:id="@+id/btnThongKe"
+            android:icon="@drawable/baseline_pie_chart_24"
+            android:title="Thống kê"
+            />
+        <item
+            android:id="@+id/btnUserManager"
+            android:icon="@drawable/baseline_person_24"
+            android:title="QUẢN LÝ USER"
+
+            />
+        <item
+            android:id="@+id/btnAdminXuatChieu"
+            android:icon="@drawable/baseline_person_24"
+            android:title="QUẢN LÝ XUẤT CHIẾU"
+
+            />
+        <item
+            android:id="@+id/btnHistory"
+            android:icon="@drawable/baseline_history_24"
+            android:title="Lịch sử giao dịch"
+            />
     </group>
     <item
         android:title="">
@@ -30,7 +55,8 @@
             <item
                 android:id="@+id/btnDangNhapPage"
                 android:icon="@drawable/baseline_exit_to_app_24"
-                android:title="DangNhap"/>
+                android:title="DangNhap"
+                android:enabled="true"/>
         </menu>
 
     </item>

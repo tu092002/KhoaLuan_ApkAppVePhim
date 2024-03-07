@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,8 @@ import com.nht.apktestapp.Model.User;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class dangKy extends AppCompatActivity {
     Button btnDangKy;
@@ -94,23 +97,25 @@ public class dangKy extends AppCompatActivity {
                     Toast.makeText(dangKy.this, "Username đã có người sử dụng, Vui lòng chọn Username khác !", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                User u = new User();
-                //Chuyển  data imageView =>  byte[] bỏ vô model class
-                BitmapDrawable bitmapDrawable = (BitmapDrawable) imgAvt.getDrawable();
-                Bitmap bitmap = bitmapDrawable.getBitmap();
-                ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
-                byte[] hinhAnh = byteArray.toByteArray();
-                u.setMaUser(0);
-                u.setHoTen(edtHoTen.getText().toString());
-                u.setUsername(edtUsername.getText().toString());
-                u.setPassword(edtPassword.getText().toString());
-                u.setRole(edtRole.getText().toString());
-                u.setAvt(hinhAnh);
-                u.setOnline(online);
-
+//                Drawable myDrawable = getResources().getDrawable(R.drawable.baseline_image_24, getTheme());
+//                imgAvt.setImageDrawable(myDrawable);
                 try {
+
+                    User u = new User();
+                    //Chuyển  data imageView =>  byte[] bỏ vô model class
+                    BitmapDrawable bitmapDrawable = (BitmapDrawable) imgAvt.getDrawable();
+                    Bitmap bitmap = bitmapDrawable.getBitmap();
+                    ByteArrayOutputStream byteArray = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
+                    byte[] hinhAnh = byteArray.toByteArray();
+                    u.setMaUser(0);
+                    u.setHoTen(edtHoTen.getText().toString());
+                    u.setUsername(edtUsername.getText().toString());
+                    u.setPassword(edtPassword.getText().toString());
+                    u.setRole(edtRole.getText().toString());
+                    u.setAvt(hinhAnh);
+                    u.setOnline(online);
+
 
                     MainActivity.database.InsertUser(u);
                     Toast.makeText(dangKy.this, "ĐĂNG KÍ THÀNH CÔNG", Toast.LENGTH_SHORT).show();
@@ -118,23 +123,39 @@ public class dangKy extends AppCompatActivity {
                     Toast.makeText(dangKy.this, "ĐĂNG KÍ THẤT BẠI", Toast.LENGTH_SHORT).show();
 
                 }
-
-
                 Intent i = new Intent(dangKy.this, dangNhap.class);
                 Bundle b = new Bundle();
-
-
 //                b.putString("Key1", "Lập trinh cùng Tú");
                 b.putString("USERNAME", edtUsername.getText().toString());
                 b.putString("PASSWORD", edtPassword.getText().toString());
 
                 i.putExtras(b);
                 startActivity(i);
-
-
             }
         });
 
-
+    }
+    //mã hóa mật khẩu
+    public static String md5(String text) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("md5");
+            byte[] result = digest.digest(text.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (byte b : result) {
+                int number = b & 0xff;
+                String hex = Integer.toHexString(number);
+                if (hex.length() == 1) {
+                    sb.append("0" + hex);
+                } else {
+                    sb.append(hex);
+                }
+            }
+            Log.i("chuoi md5 ", sb.toString());
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

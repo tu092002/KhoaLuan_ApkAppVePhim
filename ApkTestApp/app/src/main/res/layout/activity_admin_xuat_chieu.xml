@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Admin.AdminXuatChieu">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center"
+        android:text="QUẢN LÍ XUẤT CHIẾU"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnTimeStart"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="#952020"
+            android:drawableLeft="@drawable/baseline_date_range_24"
+            android:text="Chọn giờ bắt đầu"
+            android:layout_marginBottom="5dp"
+             />
+        <Button
+            android:id="@+id/btnDateStart"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="#952020"
+            android:drawableLeft="@drawable/baseline_date_range_24"
+            android:text="Chọn ngày bắt đầu"
+            android:layout_marginBottom="5dp"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="8">
+
+        <Button
+            android:id="@+id/btnThemXuatChieu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+
+            android:text="Thêm Xuất" />
+
+        <Button
+            android:id="@+id/btnSuaXuatChieu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:text="Sửa" />
+
+        <Button
+            android:id="@+id/btnXoaXuatChieu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:text="Xóa" />
+
+        <Button
+            android:id="@+id/btnHienThiXuatChieu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:text="Hiển thị" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvListXuatChieu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CE3F4FA6"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="2"
+        android:verticalSpacing="@android:dimen/app_icon_size"/>
+
+
+</LinearLayout>

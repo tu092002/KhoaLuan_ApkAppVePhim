@@ -3,17 +3,21 @@ package com.nht.apktestapp.Admin;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteAbortException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -21,23 +25,34 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.nht.apktestapp.Adapters.PhimAdapter;
 import com.nht.apktestapp.Dao.PhimDao;
+import com.nht.apktestapp.Dao.PhimXuatDao;
+import com.nht.apktestapp.Dao.XuatChieuDao;
 import com.nht.apktestapp.MainActivity;
 import com.nht.apktestapp.Model.Phim;
-import com.nht.apktestapp.Adapters.PhimAdapter;
+import com.nht.apktestapp.Model.PhimXuat;
+import com.nht.apktestapp.Model.XuatChieu;
 import com.nht.apktestapp.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AdminPhim extends AppCompatActivity {
     private static final long DOUBLE_CLICK_TIME_DELTA = 300; // Ngưỡng thời gian giữa hai lần nhấn (300 milliseconds)
     Button btnThem, btnXoa, btnSua, btnHienThi;
+    ArrayList<Integer> selectedIndices = new ArrayList<>();
+    Phim u = new Phim();
+    boolean[] selectedItems;
+    TextView tvChoiceXuatChieu;
     GridView gvListPhim;
-    EditText edtTenPhim, edtMoTa, edtGiaPhim;
+    ListView lvChoiceXuatChieu;
+    List<XuatChieu> listXuatChieu = new ArrayList<XuatChieu>();
+    EditText edtTenPhim, edtMoTa, edtGiaPhim, edtThoiLuongPhim;
     ImageView imgPhim, ibtnUpFile;
     //    ArrayAdapter<Phim> arrayAdapter;
     PhimAdapter adapter;
@@ -59,12 +74,14 @@ public class AdminPhim extends AppCompatActivity {
         btnSua = findViewById(R.id.btnSua);
         btnXoa = findViewById(R.id.btnXoa);
         btnHienThi = findViewById(R.id.btnHienThi);
-        gvListPhim = findViewById(R.id.gvListPhim   );
+        gvListPhim = findViewById(R.id.gvListPhim);
         edtTenPhim = findViewById(R.id.edtTenPhim);
         edtMoTa = findViewById(R.id.edtMoTa);
         imgPhim = findViewById(R.id.imgPhim);
         edtGiaPhim = findViewById(R.id.edtGiaPhim);
+        edtThoiLuongPhim = findViewById(R.id.edtThoiLuongPhim);
         ibtnUpFile = findViewById(R.id.ibtnUpFile);
+        tvChoiceXuatChieu = findViewById(R.id.tvChoiceXuatChieu);
         // Khởi tạo các biến
         context = this;
 
@@ -115,17 +132,28 @@ public class AdminPhim extends AppCompatActivity {
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArray);
                 byte[] hinhAnh = byteArray.toByteArray();
 
-                Phim u = new Phim(0, edtTenPhim.getText().toString(), edtMoTa.getText().toString(), hinhAnh,Double.parseDouble(edtGiaPhim.getText().toString()));
+//                Phim u = new Phim(0, edtTenPhim.getText().toString(), edtMoTa.getText().toString(), hinhAnh, Double.parseDouble(edtGiaPhim.getText().toString()), Integer.parseInt(edtThoiLuongPhim.getText().toString()));
+                u.setMaPhim(0);
+                u.setTenPhim(edtTenPhim.getText().toString());
+                u.setMoTa(edtMoTa.getText().toString());
+                u.setImgPhim(hinhAnh);
+                u.setGiaPhim(Double.parseDouble(edtGiaPhim.getText().toString()));
+                u.setThoiLuongPhim(Integer.parseInt(edtThoiLuongPhim.getText().toString()));
                 int kq = MainActivity.database.InsertPhimToDb(u);
 
 //                int kq = MainActivity.database.InsertPhimToDb();
                 if (kq == -1) {
                     Toast.makeText(AdminPhim.this, "Thêm Phim Thất bại !", Toast.LENGTH_SHORT).show();
-                } else{
+                } else {
                     Toast.makeText(AdminPhim.this, "Thêm phim Thành công !", Toast.LENGTH_SHORT).show();
+                    // sau khi thêm thành công mới thêm vào bảng nhìu nhìu PhimXuat
+                    for(int i = 0; i < selectedIndices.size(); i++ ){
+                        PhimXuatDao.insertPhimXuat(new PhimXuat(0, phimDao.getIdLastedPhim(),selectedIndices.get(i)));
+                    }
                     edtTenPhim.setText(null);
                     edtMoTa.setText(null);
                     edtGiaPhim.setText(null);
+                    edtThoiLuongPhim.setText(null);
                     imgPhim.setImageResource(R.drawable.imgempty);
                 }
 
@@ -161,6 +189,7 @@ public class AdminPhim extends AppCompatActivity {
                     edtTenPhim.setText(list.get(position).getTenPhim().toString());
                     edtMoTa.setText(list.get(position).getMoTa().toString());
                     edtGiaPhim.setText(Double.toString(list.get(position).getGiaPhim()));
+                    edtThoiLuongPhim.setText(Integer.toString(list.get(position).getThoiLuongPhim()));
                 } else {
                     // Đây là single click
                     onSingleClick();
@@ -193,7 +222,7 @@ public class AdminPhim extends AppCompatActivity {
                 byte[] hinhAnh = byteArray.toByteArray();
 
 
-                Phim p = new Phim(list.get(indexClickGv).getMaPhim(), edtTenPhim.getText().toString(), edtMoTa.getText().toString(), hinhAnh, Double.parseDouble(edtGiaPhim.getText().toString()));
+                Phim p = new Phim(list.get(indexClickGv).getMaPhim(), edtTenPhim.getText().toString(), edtMoTa.getText().toString(), hinhAnh, Double.parseDouble(edtGiaPhim.getText().toString()), Integer.parseInt(edtThoiLuongPhim.getText().toString()));
                 try {
 //                    MainActivity.database.Querydata("UPDATE PHIM SET MaPhim = null, TenPhim = " + p.getTenPhim() + ",MoTa =  " + p.getMoTa() + ",ImgPhim =  " + p.getImgPhim()
 //                            + " WHERE MaPhim = " + p.getMaPhim() + ";");
@@ -248,8 +277,36 @@ public class AdminPhim extends AppCompatActivity {
                 return false;
             }
         });
-        
 
+
+        tvChoiceXuatChieu.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                List<String> listChoice = MainActivity.database.getTimeXuatChieuOfXuatChieu();
+                selectedItems = new boolean[listChoice.size()];
+                String[] itemsArray = listChoice.toArray(new String[0]);
+                List<Integer> listMaXuatChieu = XuatChieuDao.getListMaXuatChieu();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminPhim.this);
+                builder.setTitle("Thêm xuất chiếu cho phim");
+                builder.setCancelable(false);
+                builder.setMultiChoiceItems(itemsArray, selectedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            selectedIndices.add(listMaXuatChieu.get(which));
+                        } else if (selectedIndices.contains(which)) {
+                            selectedIndices.remove(Integer.valueOf(listMaXuatChieu.get(which)));
+                        }
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle the selected items
+                    }
+                });
+                builder.show();
+            }
+        });
     }
 
     private void onSingleClick() {

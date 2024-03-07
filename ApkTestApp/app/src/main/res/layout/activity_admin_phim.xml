@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".Admin.AdminPhim">
+    tools:context=".Admin.AdminPhim"
+    android:background="@drawable/lavender_bkg"
+    >
 
 
     <LinearLayout
@@ -43,6 +45,23 @@
             android:layout_height="wrap_content"
             android:hint="Giá phim"
             android:inputType="number"/>
+        <EditText
+            android:id="@+id/edtThoiLuongPhim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Thời lượng Phim"
+            android:inputType="number"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Chọn xuất Chiếu"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/tvChoiceXuatChieu"/>
+<!--        <ListView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:id="@+id/lvChoiceXuatChieu"/>-->
 
 
         <LinearLayout

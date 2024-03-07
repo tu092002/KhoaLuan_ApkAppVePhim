@@ -1,5 +1,7 @@
 package com.nht.apktestapp.Model;
 
+import java.util.List;
+
 public class Phim {
 
     private int maPhim;
@@ -7,6 +9,37 @@ public class Phim {
     private String moTa;
     private byte[] imgPhim;
     private double giaPhim;
+    private int thoiLuongPhim;
+    private double diemPhim;
+
+
+    public int getThoiLuongPhim() {
+        return thoiLuongPhim;
+    }
+
+    public void setThoiLuongPhim(int thoiLuongPhim) {
+        this.thoiLuongPhim = thoiLuongPhim;
+    }
+
+    public Phim(int maPhim, String tenPhim, String moTa, byte[] imgPhim, double giaPhim, int thoiLuongPhim) {
+        this.maPhim = maPhim;
+        this.tenPhim = tenPhim;
+        this.moTa = moTa;
+        this.imgPhim = imgPhim;
+        this.giaPhim = giaPhim;
+        this.thoiLuongPhim = thoiLuongPhim;
+        this.diemPhim = diemPhim;
+    }
+
+    public double getDiemPhim() {
+        return diemPhim;
+    }
+
+    public void setDiemPhim(double diemPhim) {
+        this.diemPhim = diemPhim;
+    }
+
+
 
 
     public double getGiaPhim() {

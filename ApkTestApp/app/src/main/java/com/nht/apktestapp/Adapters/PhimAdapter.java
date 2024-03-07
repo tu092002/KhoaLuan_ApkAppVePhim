@@ -36,7 +36,10 @@ public class PhimAdapter extends BaseAdapter {
         TextView tvTenPhimGv;
         TextView tvMoTaGv;
         TextView tvGiaPhimGv;
+        TextView tvThoiLuongPhimGv;
         ImageView imgPhimGv; // ảnh hiển thị trong grid vỉew
+
+        TextView tvDiemPhimGv;
     }
 
     @Override
@@ -52,7 +55,9 @@ public class PhimAdapter extends BaseAdapter {
             viewHolder.tvTenPhimGv = (TextView) convertView.findViewById(R.id.tvTenPhimGv);
             viewHolder.tvMoTaGv = (TextView) convertView.findViewById(R.id.tvMoTaGv);
             viewHolder.tvGiaPhimGv = (TextView) convertView.findViewById(R.id.tvGiaPhimGv);
+            viewHolder.tvThoiLuongPhimGv = (TextView) convertView.findViewById(R.id.tvThoiLuongPhimGv);
             viewHolder.imgPhimGv = (ImageView) convertView.findViewById(R.id.imgPhimGv);
+            viewHolder.tvDiemPhimGv = (TextView) convertView.findViewById(R.id.tvDiemPhimGv);
 
             convertView.setTag(viewHolder);
 
@@ -65,9 +70,12 @@ public class PhimAdapter extends BaseAdapter {
         viewHolder.tvTenPhimGv.setText(arrayList.get(position).getTenPhim());
         viewHolder.tvMoTaGv.setText(arrayList.get(position).getMoTa());
         viewHolder.tvGiaPhimGv.setText(Double.toString(arrayList.get(position).getGiaPhim()));
+        viewHolder.tvThoiLuongPhimGv.setText(Double.toString(arrayList.get(position).getThoiLuongPhim()));
 //        viewHolder.imgPhimGv.setImageResource(arrayList.get(position).getImgPhim());
+        viewHolder.tvDiemPhimGv.setText(Double.toString(arrayList.get(position).getDiemPhim()));
 
-        // chuyển byte[] => bitmap
+
+        // chuyển byte[] => ảnh giao diện bitmap
         byte[] hinhAnh =  phim.getImgPhim();
         Bitmap bitmap = BitmapFactory.decodeByteArray(hinhAnh, 0, hinhAnh.length);
         viewHolder.imgPhimGv.setImageBitmap(bitmap);

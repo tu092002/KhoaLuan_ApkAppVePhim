@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DatVe"
+    android:background="@drawable/bgticket3">
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="8dp"
+        android:text="Chi Tiết Phim"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgPhimDetail"
+        android:layout_width="178dp"
+        android:layout_height="288dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+
+    <TextView
+        android:id="@+id/tvTenPhimDetail"
+        android:layout_width="192dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="56dp"
+        android:text="Tên Phim"
+        android:textColor="#D51313"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgPhimDetail"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvGiaPhimDetail"
+        android:layout_width="186dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="50000"
+        android:textColor="#1AFF23"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imgPhimDetail"
+        app:layout_constraintTop_toBottomOf="@+id/tvTenPhimDetail" />
+
+    <TextView
+        android:id="@+id/tvMotaPhimDetail"
+        android:layout_width="248dp"
+        android:layout_height="83dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="152dp"
+        android:text="Mô tả chi tiết: Đây là thể loại hài hước"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgPhimDetail" />
+
+    <TextView
+        android:id="@+id/tvDefaultTacGia"
+        android:layout_width="186dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:text="Đạo diễn: Nguyễn Huy Tú"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgPhimDetail" />
+
+    <TextView
+        android:id="@+id/tvTheLoai"
+        android:layout_width="176dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="96dp"
+        android:text="Thể loại: Hành động"
+        android:textStyle="italic"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgPhimDetail" />
+
+    <TextView
+        android:id="@+id/tvKhoiChieu"
+        android:layout_width="182dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Khởi chiếu: 30-8-2023"
+        android:textColor="#F1EEEE"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgPhimDetail" />
+
+    <TextView
+        android:id="@+id/tvThoiLuongPhim"
+        android:layout_width="154dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="348dp"
+        android:text="Thời lượng: 120 phút"
+        android:textColor="#F3F2F2"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/imgPhimDetail"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnDatVePage"
+        android:layout_width="139dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
+        android:text="Đặt vé"
+        app:layout_constraintStart_toEndOf="@+id/imgPhimDetail"
+        app:layout_constraintTop_toBottomOf="@+id/tvGiaPhimDetail" />
+
+    <Button
+        android:id="@+id/btnDanhGia"
+        android:layout_width="92dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="104dp"
+        android:text="Đánh giá"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></Button>
+
+    <EditText
+        android:id="@+id/txtDanhGia"
+        android:layout_width="54dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="280dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/circle_bck"
+        android:hint="0.0"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></EditText>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="265dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:text="Lịch chiếu"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMotaPhimDetail" />
+
+    <TextView
+        android:id="@+id/tvLichChieuDetail"
+        android:layout_width="270dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="2:30"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <!-- Các thành phần giao diện khác ở đây -->
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

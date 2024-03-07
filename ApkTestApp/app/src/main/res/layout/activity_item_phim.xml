@@ -35,31 +35,70 @@
             android:textColor="#DDE63A2D"
             android:textSize="20dp"
             android:textStyle="bold" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Giá"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:textAlignment="center"
-            android:maxLines="@integer/material_motion_duration_medium_2"
-            android:layout_weight="1"
 
-            android:id="@+id/tvGiaPhimGv"/>
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giá"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:textAlignment="textStart"
+                android:maxLines="@integer/material_motion_duration_medium_2"
+                android:layout_weight="1"
+
+                android:id="@+id/tvGiaPhimGv"/>
+
+            <TextView
+                android:id="@+id/tvThoiLuongPhimGv"
+                android:layout_width="78dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="@integer/material_motion_duration_medium_2"
+                android:text="Time"
+                android:textAlignment="textStart"
+                android:textColor="#fff"
+                android:textSize="20dp"
+
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="89dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:text="minutes" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FDDABD5A"
+                android:text="10"
+                android:textSize="20dp"
+                android:textAlignment="textStart"
+
+                android:id="@+id/tvDiemPhimGv"
+                ></TextView>
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvMoTaGv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:maxLines="@integer/material_motion_duration_medium_2"
         android:text="Mô tả phimccddddddddddddddddddddddddddddddddddddddddđ"
         android:textColor="#fff"
-        android:textStyle="italic"
         android:textSize="20dp"
-        android:maxLines="@integer/material_motion_duration_medium_2"
-        android:id="@+id/tvMoTaGv"/>
+        android:textStyle="italic" />
 
 
-
-
-  </LinearLayout>
+</LinearLayout>
