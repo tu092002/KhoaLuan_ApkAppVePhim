@@ -10,6 +10,7 @@ public class Phim {
     private byte[] imgPhim;
     private double giaPhim;
     private int thoiLuongPhim;
+
     private double diemPhim;
 
 

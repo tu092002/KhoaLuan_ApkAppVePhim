@@ -14,14 +14,22 @@
         android:layout_height="wrap_content"
         android:text="Dismiss" />
 
-    <GridView
-        android:id="@+id/gvListGheDatVe"
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:numColumns="5"
-        android:columnWidth="10dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        />
+    <HorizontalScrollView
+        android:layout_width="366dp"
+        android:layout_height="451dp"
+        android:fillViewport="true"
+        android:scrollbars="horizontal">
+
+        <GridView
+            android:id="@+id/gvListGheDatVe"
+            android:layout_width="352dp"
+            android:layout_height="600dp"
+            android:columnWidth="10dp"
+            android:gravity="center"
+            android:numColumns="9"
+            android:stretchMode="columnWidth" />
+    </HorizontalScrollView>
+
+
 
 </LinearLayout>

@@ -253,6 +253,7 @@ public class AdminPhim extends AppCompatActivity {
 //                      int  kq = MainActivity.database.DeletePhimToDb(position);
                         try {
 //                            String maPhimView = parent.getItemAtPosition(position).toString();
+                            MainActivity.database.Querydata("Delete from PhimXuat where " + list.get(position).getMaPhim() + " == MaPhim");
                             MainActivity.database.Querydata("Delete from Phim where " + list.get(position).getMaPhim() + " == MaPhim ");
 
                         } catch (Exception e) {

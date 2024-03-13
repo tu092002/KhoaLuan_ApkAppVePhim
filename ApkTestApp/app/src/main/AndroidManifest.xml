@@ -30,7 +30,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Admin.UserManagerActivity"
             android:exported="false" />
@@ -43,9 +43,9 @@
         <activity
             android:name=".itemCart"
             android:exported="false" />
-        <activity
-            android:name=".DateTimePickerDialog"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".DateTimePickerDialog"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".ListRapDialog"
             android:exported="false" />
