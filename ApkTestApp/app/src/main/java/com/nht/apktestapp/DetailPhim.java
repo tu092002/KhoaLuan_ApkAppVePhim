@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,6 +31,7 @@ public class DetailPhim extends AppCompatActivity {
     TextView tvLichChieuDetail;
     EditText txtDanhGia;
     Button btnDanhGia;
+    TextView tvTacGiaDetail,tvQuocGiaDetail,tvTheLoaiDetail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,9 @@ public class DetailPhim extends AppCompatActivity {
         tvGiaPhimDetail = (TextView) findViewById(R.id.tvGiaPhimDetail);
         tvMoTaPhimDetail = (TextView)  findViewById(R.id.tvMotaPhimDetail);
         imgPhimDetail = (ImageView)  findViewById(R.id.imgPhimDetail);
-
+        tvTacGiaDetail = (TextView) findViewById(R.id.tvTacGiaDetail);
+        tvTheLoaiDetail = (TextView) findViewById(R.id.tvTheLoaiDetail);
+        tvQuocGiaDetail = (TextView) findViewById(R.id.tvQuocGiaDetail);
         txtDanhGia = (EditText) findViewById(R.id.txtDanhGia);
         btnDanhGia = (Button) findViewById(R.id.btnDanhGia);
 
@@ -57,6 +61,9 @@ public class DetailPhim extends AppCompatActivity {
         tvTenPhimDetail.setText(phim.getTenPhim());
         tvGiaPhimDetail.setText(Double.toString(phim.getGiaPhim()));
         tvMoTaPhimDetail.setText(phim.getMoTa());
+        tvQuocGiaDetail.setText("Quốc gia: "+ phim.getQuocGia());
+        tvTheLoaiDetail.setText("Thể loại: "+phim.getTheLoai());
+        tvTacGiaDetail.setText("Tác giả: "+phim.getTacGia());
         StringBuilder sb = new StringBuilder();
         List<String> listLichChieu = PhimXuatDao.getListPhimXuatByMaPhim(phim.getMaPhim());
         listLichChieu.forEach(item -> {

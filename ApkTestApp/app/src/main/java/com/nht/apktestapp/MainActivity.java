@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
 
 
 // Tạo database
-        database = new Database(this, "film.sqlite", null, 8);
+        database = new Database(this, "film.sqlite", null, 9);
         sqLiteDatabase = database.getWritableDatabase(); // cái này cho phép ghi dữ liệu database
 // có sqLiteDatabase mới dùng hàm đc Giỏ hàng number
         tvBadge = (TextView)  findViewById(R.id.tvBadge);
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
         //Khu vực khai báo, tạo viewFlipper
         list =  phimDao.getAllPhimToString();
 
-        for (int i = 0; i < 0; i++) {
+        for (int i = 0; i < 5; i++) {
             // Lấy tham chiếu đến ImageView và gắn hình ảnh cho nó
             ImageView imageView = findViewById(getResources().getIdentifier("imgv" + (i + 1), "id", getPackageName()));
 //            imageView.setImageResource(list.get(i).getImgPhim());

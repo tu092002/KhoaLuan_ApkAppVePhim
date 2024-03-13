@@ -45,12 +45,34 @@
             android:layout_height="wrap_content"
             android:hint="Giá phim"
             android:inputType="number"/>
+
         <EditText
             android:id="@+id/edtThoiLuongPhim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Thời lượng Phim"
             android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/edtTacGia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Tác giả..."
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tvQuocGia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quốc gia..." />
+
+        <TextView
+            android:id="@+id/tvTheloai"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Thể loại..." />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -123,6 +145,7 @@
                 android:text="Hiển thị" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 

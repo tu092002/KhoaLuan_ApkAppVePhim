@@ -10,9 +10,47 @@ public class Phim {
     private byte[] imgPhim;
     private double giaPhim;
     private int thoiLuongPhim;
-
+    private String tacGia;
+    private String theLoai;
+    private String quocGia;
     private double diemPhim;
 
+    public Phim(int maPhim, String tenPhim, String moTa, byte[] imgPhim, double giaPhim, int thoiLuongPhim, String tacGia, String theLoai, String quocGia, double diemPhim) {
+        this.maPhim = maPhim;
+        this.tenPhim = tenPhim;
+        this.moTa = moTa;
+        this.imgPhim = imgPhim;
+        this.giaPhim = giaPhim;
+        this.thoiLuongPhim = thoiLuongPhim;
+        this.tacGia = tacGia;
+        this.theLoai = theLoai;
+        this.quocGia = quocGia;
+        this.diemPhim = diemPhim;
+    }
+
+    public String getTacGia() {
+        return tacGia;
+    }
+
+    public void setTacGia(String tacGia) {
+        this.tacGia = tacGia;
+    }
+
+    public String getTheLoai() {
+        return theLoai;
+    }
+
+    public void setTheLoai(String theLoai) {
+        this.theLoai = theLoai;
+    }
+
+    public String getQuocGia() {
+        return quocGia;
+    }
+
+    public void setQuocGia(String quocGia) {
+        this.quocGia = quocGia;
+    }
 
     public int getThoiLuongPhim() {
         return thoiLuongPhim;

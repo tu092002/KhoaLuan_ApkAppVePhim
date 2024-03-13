@@ -172,7 +172,7 @@ public class SplashActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }
-                        }, 500); // Thời gian chuyển đổi là 4 gi
+                        }, 1000); // Thời gian chuyển đổi là 4 gi
                     }
                 }.start();
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.nht.apktestapp.Adapters.GheAdapter;
 import com.nht.apktestapp.Adapters.RapAdapter;
@@ -97,6 +98,7 @@ public class DatVe extends AppCompatActivity implements OnDialogDismissListener 
         imgPhimDatVe.setImageBitmap(bitmap);
 
         // Tạo một danh sách các mục
+
 
         btnXuatChieuDatVe.setOnClickListener(new View.OnClickListener() {
             @Override

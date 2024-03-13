@@ -29,6 +29,7 @@ import com.nht.apktestapp.Adapters.PhimAdapter;
 import com.nht.apktestapp.Dao.PhimDao;
 import com.nht.apktestapp.Dao.PhimXuatDao;
 import com.nht.apktestapp.Dao.XuatChieuDao;
+import com.nht.apktestapp.DatVe;
 import com.nht.apktestapp.MainActivity;
 import com.nht.apktestapp.Model.Phim;
 import com.nht.apktestapp.Model.PhimXuat;
@@ -45,8 +46,17 @@ import java.util.List;
 public class AdminPhim extends AppCompatActivity {
     private static final long DOUBLE_CLICK_TIME_DELTA = 300; // Ngưỡng thời gian giữa hai lần nhấn (300 milliseconds)
     Button btnThem, btnXoa, btnSua, btnHienThi;
+    TextView tvQuocGia,tvTheloai;
+    static int selectIndexQuocGia = -1;
+    static int choiceQuocGia;
+    EditText edtTacGia;
+
     ArrayList<Integer> selectedIndices = new ArrayList<>();
     Phim u = new Phim();
+    static int selectIndexTheLoai = -1;
+    static String stringTheLoai = "";
+    static String stringQuocGia = "";
+    static int choiceTheLoai;
     boolean[] selectedItems;
     TextView tvChoiceXuatChieu;
     GridView gvListPhim;
@@ -79,7 +89,10 @@ public class AdminPhim extends AppCompatActivity {
         edtMoTa = findViewById(R.id.edtMoTa);
         imgPhim = findViewById(R.id.imgPhim);
         edtGiaPhim = findViewById(R.id.edtGiaPhim);
+        edtTacGia = findViewById(R.id.edtTacGia);
         edtThoiLuongPhim = findViewById(R.id.edtThoiLuongPhim);
+        tvQuocGia = findViewById(R.id.tvQuocGia);
+        tvTheloai =  findViewById(R.id.tvTheloai);
         ibtnUpFile = findViewById(R.id.ibtnUpFile);
         tvChoiceXuatChieu = findViewById(R.id.tvChoiceXuatChieu);
         // Khởi tạo các biến
@@ -139,6 +152,10 @@ public class AdminPhim extends AppCompatActivity {
                 u.setImgPhim(hinhAnh);
                 u.setGiaPhim(Double.parseDouble(edtGiaPhim.getText().toString()));
                 u.setThoiLuongPhim(Integer.parseInt(edtThoiLuongPhim.getText().toString()));
+                ///////////
+                u.setTacGia(edtTacGia.getText().toString());
+                u.setTheLoai(stringTheLoai);
+                u.setQuocGia(stringQuocGia);
                 int kq = MainActivity.database.InsertPhimToDb(u);
 
 //                int kq = MainActivity.database.InsertPhimToDb();
@@ -154,9 +171,9 @@ public class AdminPhim extends AppCompatActivity {
                     edtMoTa.setText(null);
                     edtGiaPhim.setText(null);
                     edtThoiLuongPhim.setText(null);
+                    edtTacGia.setText(null);
                     imgPhim.setImageResource(R.drawable.imgempty);
                 }
-
                 adapter.notifyDataSetChanged();
             }
         });
@@ -189,6 +206,9 @@ public class AdminPhim extends AppCompatActivity {
                     edtTenPhim.setText(list.get(position).getTenPhim().toString());
                     edtMoTa.setText(list.get(position).getMoTa().toString());
                     edtGiaPhim.setText(Double.toString(list.get(position).getGiaPhim()));
+                    tvTheloai.setText(list.get(position).getTheLoai());
+                    tvQuocGia.setText(list.get(position).getQuocGia());
+                    edtTacGia.setText(list.get(position).getTacGia());
                     edtThoiLuongPhim.setText(Integer.toString(list.get(position).getThoiLuongPhim()));
                 } else {
                     // Đây là single click
@@ -222,11 +242,22 @@ public class AdminPhim extends AppCompatActivity {
                 byte[] hinhAnh = byteArray.toByteArray();
 
 
-                Phim p = new Phim(list.get(indexClickGv).getMaPhim(), edtTenPhim.getText().toString(), edtMoTa.getText().toString(), hinhAnh, Double.parseDouble(edtGiaPhim.getText().toString()), Integer.parseInt(edtThoiLuongPhim.getText().toString()));
+//                Phim p = new Phim(list.get(indexClickGv).getMaPhim(), edtTenPhim.getText().toString(), edtMoTa.getText().toString(), hinhAnh, Double.parseDouble(edtGiaPhim.getText().toString()), Integer.parseInt(edtThoiLuongPhim.getText().toString()));
+                Phim u = new Phim();
+                u.setMaPhim(0);
+                u.setTenPhim(edtTenPhim.getText().toString());
+                u.setMoTa(edtMoTa.getText().toString());
+                u.setImgPhim(hinhAnh);
+                u.setGiaPhim(Double.parseDouble(edtGiaPhim.getText().toString()));
+                u.setThoiLuongPhim(Integer.parseInt(edtThoiLuongPhim.getText().toString()));
+                ///////////
+                u.setTacGia(edtTacGia.getText().toString());
+                u.setTheLoai(stringTheLoai);
+                u.setQuocGia(stringQuocGia);
                 try {
 //                    MainActivity.database.Querydata("UPDATE PHIM SET MaPhim = null, TenPhim = " + p.getTenPhim() + ",MoTa =  " + p.getMoTa() + ",ImgPhim =  " + p.getImgPhim()
 //                            + " WHERE MaPhim = " + p.getMaPhim() + ";");
-                    phimDao.UpdatePhim(p);
+                    phimDao.UpdatePhim(u);
 
                     Toast.makeText(AdminPhim.this, " Cập nhật Thành công !", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
@@ -236,7 +267,6 @@ public class AdminPhim extends AppCompatActivity {
 
             }
         });
-
 
         gvListPhim.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -308,6 +338,72 @@ public class AdminPhim extends AppCompatActivity {
                 builder.show();
             }
         });
+        tvTheloai.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String[] itemsArray = {"Anime","Kinh dị", "Hành động", "Viễn tưởng", "Hoạt hình", "Tình cảm"};
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AdminPhim.this);
+                builder.setTitle(" chọn thể loại phim ");
+                builder.setSingleChoiceItems(itemsArray, selectIndexTheLoai, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cập nhật lựa chọn
+                        selectIndexTheLoai = which;
+
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Xử lý khi người dùng chọn OK
+                        // selectedItem chứa lựa chọn đã chọn
+                        choiceTheLoai = selectIndexTheLoai;
+                        stringTheLoai = itemsArray[choiceTheLoai];
+                        tvTheloai.setText(itemsArray[choiceTheLoai]);
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+
+                android.app.AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+
+        });
+        tvQuocGia.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String[] itemsArray = {"Việt Nam","Nhật Bản", "Trung Quốc", "Mỹ", "Hàn Quốc", "Thái Lan"};
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AdminPhim.this);
+                builder.setTitle(" chọn quốc gia ");
+                builder.setSingleChoiceItems(itemsArray, selectIndexQuocGia, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Cập nhật lựa chọn
+                        selectIndexQuocGia = which;
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Xử lý khi người dùng chọn OK
+                        // selectedItem chứa lựa chọn đã chọn
+                        choiceQuocGia = selectIndexQuocGia;
+                        stringQuocGia = itemsArray[choiceQuocGia];
+
+                        tvQuocGia.setText(itemsArray[choiceQuocGia]);
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", null);
+
+                android.app.AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+
+        });
+
     }
 
     private void onSingleClick() {

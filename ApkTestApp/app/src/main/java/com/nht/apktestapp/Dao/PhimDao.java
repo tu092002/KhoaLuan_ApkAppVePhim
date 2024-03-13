@@ -135,6 +135,9 @@ public class PhimDao {
             p.setGiaPhim(c.getDouble(4));
             p.setThoiLuongPhim(c.getInt(5));
             p.setDiemPhim(c.getDouble(6));
+            p.setTacGia(c.getString(7));
+            p.setQuocGia(c.getString(8));
+            p.setTheLoai(c.getString(9));
             // Chuyển đối tượng thành chuỗi
             ls.add(p);
             c.moveToNext();

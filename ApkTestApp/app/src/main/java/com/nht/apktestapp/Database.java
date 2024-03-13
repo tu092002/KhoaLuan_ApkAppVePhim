@@ -205,7 +205,7 @@ public class Database extends SQLiteOpenHelper {
     public int InsertPhimToDb(Phim p) {
         try {
             SQLiteDatabase db = getReadableDatabase();
-            String sql = "INSERT INTO Phim VALUES(null, ?, ?, ?, ?, ?,?)";
+            String sql = "INSERT INTO Phim VALUES(null, ?, ?, ?, ?, ?,?,?, ?,?)";
             SQLiteStatement statement = db.compileStatement(sql);
             statement.clearBindings();
 
@@ -215,7 +215,9 @@ public class Database extends SQLiteOpenHelper {
             statement.bindDouble(4, p.getGiaPhim());
             statement.bindLong(5, p.getThoiLuongPhim());
             statement.bindDouble(6, 10.0);
-
+            statement.bindString(7,p.getTacGia());
+            statement.bindString(8,p.getQuocGia());
+            statement.bindString(9,p.getTheLoai());
             statement.executeInsert();
             return 1; // thành công
         } catch (Exception ex) {
@@ -416,6 +418,9 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+
+
         //SQLite  KHÔNG CHO PHÉP DÙNG ALTER TABLE  để gắn FOREIGN KEY VÀO ĐC------------------------------------
 //        String fk_Ve_Phim = "ALTER TABLE " + TB_Ve + " ADD CONSTRAINT fk_Ve_Phim FOREIGN KEY (MaPhim) REFERENCES " + TB_Phim + "(MaPhim)";
 //        String fk_Ve_User = "ALTER TABLE " + TB_Ve + " ADD CONSTRAINT fk_Ve_User FOREIGN KEY (MaUser) REFERENCES " + TB_User + "(MaUser)";
@@ -428,13 +433,11 @@ public class Database extends SQLiteOpenHelper {
         // chỉ dùng khi ta tạo db bằng contructor(context) khi đó
         // cả hàm oncreate cùng phải sẽ đc ngầm gọi mà ta ko cần gọi ra
         if (newVersion > oldVersion) {
-            String tbPhimXuat = "CREATE TABLE IF NOT EXISTS "
-                    + TB_PhimXuat + "(" + TB_PhimXuat_MaPhimXuat + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + TB_PhimXuat_MaPhim + " INTEGER, "
-                    + TB_PhimXuat_MaXuatChieu + " INTEGER,"
-                    + "FOREIGN KEY (" + TB_PhimXuat_MaPhim + ") REFERENCES " + TB_Phim + "(" + TB_Phim_MaPhim + "), "
-                    + "FOREIGN KEY (" + TB_PhimXuat_MaXuatChieu + ") REFERENCES " + TB_XuatChieu + "(" + TB_XuatChieu_MaXuatChieu + ")) ";
-            db.execSQL(tbPhimXuat);
+
+            db.execSQL("ALTER TABLE " + TB_Phim + " ADD COLUMN TacGia TEXT");
+            db.execSQL("ALTER TABLE " + TB_Phim + " ADD COLUMN QuocGia TEXT");
+            db.execSQL("ALTER TABLE " + TB_Phim + " ADD COLUMN TheLoai TEXT");
+
         }
 
     }
