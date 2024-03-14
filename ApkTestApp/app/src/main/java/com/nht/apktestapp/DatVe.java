@@ -87,7 +87,7 @@ public class DatVe extends AppCompatActivity implements OnDialogDismissListener 
 
 
         list = phimDao.getAllPhimToString();
-        Phim phim = list.get(DetailPhim.vitriClickPhim);// Khởi tạo Spinner
+        Phim phim = phimDao.getPhimById(DetailPhim.maphimClick);// Khởi tạo Spinner
         btnChonRap = (Button) findViewById(R.id.btnChonRap);
         tvTenPhimDatVe.setText(phim.getTenPhim());
 //        tvGiaPhimDatVe.setText(Double.toString(phim.getGiaPhim()));
@@ -188,6 +188,8 @@ public class DatVe extends AppCompatActivity implements OnDialogDismissListener 
 
                     LocalDateTime currentDateTime = LocalDateTime.now();
                     limitedDateTime = currentDateTime.plusMinutes(1);
+
+
 
                 } catch (Exception e) {
                     Toast.makeText(DatVe.this, "Có lỗi  " + e, Toast.LENGTH_SHORT).show();

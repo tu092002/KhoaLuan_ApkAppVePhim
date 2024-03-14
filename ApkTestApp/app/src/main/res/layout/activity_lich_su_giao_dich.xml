@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LichSuGiaoDich">
+    tools:context=".LichSuGiaoDich"
+    android:background="@drawable/lavender_bkg"
+    >
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="314dp"
         android:layout_height="43dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/lavender_bkg"
         android:gravity="center"
@@ -18,6 +19,7 @@
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,50 +27,59 @@
         android:id="@+id/lvLichSuVe"
         android:layout_width="329dp"
 
-        android:layout_height="431dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="240dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imgAvtLichSuGiaoDich"
         android:layout_width="123dp"
         android:layout_height="178dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvUsernameLichSu"
-        android:layout_width="102dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="204dp"
+        android:layout_width="171dp"
+        android:layout_height="36dp"
 
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="84dp"
         android:text="username"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.862"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvHoTenLichSu"
-        android:layout_width="105dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="144dp"
+        android:layout_width="173dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="124dp"
         android:text="họ tên"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.869"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvRoleLichSu"
-        android:layout_width="49dp"
-        android:layout_height="21dp"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="208dp"
+        android:layout_width="152dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="164dp"
         android:text="Role"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.799"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

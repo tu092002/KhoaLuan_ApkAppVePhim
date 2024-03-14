@@ -47,7 +47,26 @@ public class PhimDao {
         c.close();
         return id;
     }
-
+    public Phim getPhimById(int id){
+        Cursor c = MainActivity.database.GetData("SELECT * FROM Phim Where MaPhim = '" + id  +"' LIMIT 1");
+        c.moveToFirst();
+        Phim p = new Phim();
+        while (c.isAfterLast() == false) {
+            p.setMaPhim(c.getInt(0));
+            p.setTenPhim(c.getString(1));
+            p.setMoTa(c.getString(2));
+            p.setImgPhim(c.getBlob(3));
+            p.setGiaPhim(c.getDouble(4));
+            p.setDiemPhim(c.getDouble(5));
+            p.setThoiLuongPhim(c.getInt(6));
+            p.setTacGia(c.getString(7));
+            p.setQuocGia(c.getString(8));
+            p.setTheLoai(c.getString(9));
+            c.moveToNext();
+        }
+        c.close();
+        return p;
+    }
     public String getTenPhimById(int id) {
         String tenPhim = "";
         Cursor c = MainActivity.database.GetData("SELECT * FROM Phim Where MaPhim = '" + id + "' LIMIT 1");

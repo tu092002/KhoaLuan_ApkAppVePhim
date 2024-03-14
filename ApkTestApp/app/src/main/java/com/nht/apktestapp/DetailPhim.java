@@ -22,11 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailPhim extends AppCompatActivity {
-    TextView tvTenPhimDetail, tvGiaPhimDetail, tvMoTaPhimDetail;
+    TextView tvTenPhimDetail, tvGiaPhimDetail, tvMoTaPhimDetail,tvThoiLuongPhimDetail;
     ImageView imgPhimDetail;
     List<Phim> list = new ArrayList<>();
     PhimDao phimDao;
-    public static  int vitriClickPhim;
+//    public static  int vitriClickPhim;
+    public static  int maphimClick;
     Button btnDatVePage;
     TextView tvLichChieuDetail;
     EditText txtDanhGia;
@@ -42,6 +43,7 @@ public class DetailPhim extends AppCompatActivity {
         tvTenPhimDetail = (TextView) findViewById(R.id.tvTenPhimDetail);
         tvGiaPhimDetail = (TextView) findViewById(R.id.tvGiaPhimDetail);
         tvMoTaPhimDetail = (TextView)  findViewById(R.id.tvMotaPhimDetail);
+        tvThoiLuongPhimDetail = (TextView)  findViewById(R.id.tvThoiLuongPhimDetail);
         imgPhimDetail = (ImageView)  findViewById(R.id.imgPhimDetail);
         tvTacGiaDetail = (TextView) findViewById(R.id.tvTacGiaDetail);
         tvTheLoaiDetail = (TextView) findViewById(R.id.tvTheLoaiDetail);
@@ -56,11 +58,13 @@ public class DetailPhim extends AppCompatActivity {
         list.clear();
 
         list = phimDao.getAllPhimToString();
-        vitriClickPhim = Integer.parseInt( b.getString("POSITION"));
-        Phim phim = list.get(vitriClickPhim);
+//        vitriClickPhim = Integer.parseInt( b.getString("POSITION"));
+        maphimClick = Integer.parseInt( b.getString("MAPHIM"));
+        Phim phim = phimDao.getPhimById(maphimClick);
         tvTenPhimDetail.setText(phim.getTenPhim());
         tvGiaPhimDetail.setText(Double.toString(phim.getGiaPhim()));
         tvMoTaPhimDetail.setText(phim.getMoTa());
+        tvThoiLuongPhimDetail.setText("thời lượng: " + phim.getThoiLuongPhim() + " phút");
         tvQuocGiaDetail.setText("Quốc gia: "+ phim.getQuocGia());
         tvTheLoaiDetail.setText("Thể loại: "+phim.getTheLoai());
         tvTacGiaDetail.setText("Tác giả: "+phim.getTacGia());
@@ -88,9 +92,9 @@ public class DetailPhim extends AppCompatActivity {
                     Intent i  = new Intent(DetailPhim.this, DatVe.class);
 
                     Bundle b = new Bundle();
-                    b.putString("POSITION_DATVE", String.valueOf(vitriClickPhim));
+//                    b.putString("POSITION_DATVE", String.valueOf(vitriClickPhim));
                     i.putExtras(b);
-                    Toast.makeText(DetailPhim.this, "Phim " + list.get(vitriClickPhim).getTenPhim(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailPhim.this, "Phim " + phimDao.getPhimById(maphimClick).getTenPhim(), Toast.LENGTH_SHORT).show();
                     startActivity(i);
                 }
 

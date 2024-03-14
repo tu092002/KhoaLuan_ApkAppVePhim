@@ -31,21 +31,28 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.type.DateTime;
 import com.nht.apktestapp.Adapters.PhimAdapter;
 import com.nht.apktestapp.Admin.AdminPhim;
 import com.nht.apktestapp.Admin.AdminRap;
 import com.nht.apktestapp.Admin.AdminXuatChieu;
 import com.nht.apktestapp.Admin.UserManagerActivity;
 import com.nht.apktestapp.Dao.PhimDao;
+import com.nht.apktestapp.Dao.PhimXuatDao;
 import com.nht.apktestapp.Dao.VeDao;
 import com.nht.apktestapp.Model.Ghe;
 import com.nht.apktestapp.Model.Phim;
+import com.nht.apktestapp.Model.PhimXuat;
 import com.nht.apktestapp.Model.Rap;
 import com.nht.apktestapp.Model.Ve;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements OnDialogDismissListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -82,10 +89,8 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
 // có sqLiteDatabase mới dùng hàm đc Giỏ hàng number
         tvBadge = (TextView)  findViewById(R.id.tvBadge);
         badgeNumber();
-        // tạo hình avt
-//        imgAvtMainAct = (ImageView) findViewById(R.id.imgAvtMainAct);
-//        User user = MainActivity.database.GetData("SELECT * FROM User WHERE active = 1")
-//        imgAvtMainAct.setImageDrawable();
+        // xóa hết ghế mỗi lần 1 phim kết thúc để rạp trống cho phim típ theo chiếu
+        xoaAllGheKhiHetPhim();
 
         context = this;
 
@@ -107,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
                 Intent i = new Intent(MainActivity.this, DetailPhim.class);
 
                 Bundle b = new Bundle();
-                b.putString("POSITION", String.valueOf(position));
+//                b.putString("POSITION", String.valueOf(position));
+                b.putString("MAPHIM", String.valueOf(list.get(position).getMaPhim()));
                 i.putExtras(b);
                 Toast.makeText(MainActivity.this, "Phim " + list.get(position).getTenPhim(), Toast.LENGTH_SHORT).show();
                 startActivity(i);
@@ -122,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
             public void onClick(View v) {
                 String keyWord = actvSearchPhim.getText().toString().trim();
 //                list = phimDao.getListPhimByKeyWord(keyWord);
-                Cursor c = MainActivity.database.GetData("SELECT * FROM Phim WHERE TenPhim LIKE '%" + keyWord + "%'");
+                Cursor c = MainActivity.database.GetData("SELECT * FROM Phim WHERE TenPhim LIKE '%" + keyWord + "%' ORDER BY MaPhim DESC");
                 list.clear();
                 c.moveToFirst();
                 while (c.isAfterLast() == false) {
@@ -132,6 +138,11 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
                     p.setMoTa(c.getString(2));
                     p.setImgPhim(c.getBlob(3));
                     p.setGiaPhim(c.getDouble(4));
+                    p.setDiemPhim(c.getDouble(5));
+                    p.setThoiLuongPhim(c.getInt(6));
+                    p.setTacGia(c.getString(7));
+                    p.setQuocGia(c.getString(8));
+                    p.setTheLoai(c.getString(9));
                     list.add(p);
                     c.moveToNext();
                 }
@@ -380,7 +391,38 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
         super.onPointerCaptureChanged(hasCapture);
     }
 
+    public void xoaAllGheKhiHetPhim(){
+        PhimDao phimDao = new PhimDao();
+        List<Phim> listPhim = phimDao.getAllPhimToString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        for(Phim p: listPhim){
+            List<String> listTimeStart = PhimXuatDao.getListPhimXuatByMaPhim(p.getMaPhim());// ds
 
+            for(String i: listTimeStart){
+                LocalDateTime timeStartPhim = LocalDateTime.parse(i,formatter);
+                LocalDateTime timeEndPhim = timeStartPhim.plusMinutes(p.getThoiLuongPhim());
+                // Tính số phút từ thời điểm hiện tại đến thời điểm cho trước
+//            Duration duration = Duration.between(now, timeEndPhim);
+//            long minutes = duration.toMinutes();
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        // Thực hiện tác vụ xử lý dữ liệu ở đây
+                        LocalDateTime now = LocalDateTime.now();
+
+                        if(Duration.between(now,timeEndPhim).toMinutes()  == 0 ){
+                            MainActivity.database.Querydata("UPDATE Ghe SET empty = 'true' ");
+
+                        }
+                    }
+                }, 0, 60 * 1000); // Chạy mỗi phút
+
+            }
+        }
+
+
+    }
 //
 //    @Override
 //    public void onPointerCaptureChanged(boolean hasCapture) {

@@ -47,8 +47,8 @@ public class LichSuGiaoDich extends AppCompatActivity {
         imgAvtLichSuGiaoDich.setImageBitmap(bitmap);
 
 
-        tvUsernameLichSu.setText(dangNhap.currentUser.getUserName());
-        tvHoTenLichSu.setText(dangNhap.currentUser.getHoTen());
-        tvRoleLichSu.setText(dangNhap.currentUser.getRole());
+        tvUsernameLichSu.setText("Username: "+dangNhap.currentUser.getUserName());
+        tvHoTenLichSu.setText("Họ Tên: " +dangNhap.currentUser.getHoTen());
+        tvRoleLichSu.setText("Vai trò: "+dangNhap.currentUser.getRole());
     }
 }

@@ -3,13 +3,11 @@ package com.nht.apktestapp.Admin;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteAbortException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -29,7 +27,6 @@ import com.nht.apktestapp.Adapters.PhimAdapter;
 import com.nht.apktestapp.Dao.PhimDao;
 import com.nht.apktestapp.Dao.PhimXuatDao;
 import com.nht.apktestapp.Dao.XuatChieuDao;
-import com.nht.apktestapp.DatVe;
 import com.nht.apktestapp.MainActivity;
 import com.nht.apktestapp.Model.Phim;
 import com.nht.apktestapp.Model.PhimXuat;
@@ -40,23 +37,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class AdminPhim extends AppCompatActivity {
     private static final long DOUBLE_CLICK_TIME_DELTA = 300; // Ngưỡng thời gian giữa hai lần nhấn (300 milliseconds)
-    Button btnThem, btnXoa, btnSua, btnHienThi;
-    TextView tvQuocGia,tvTheloai;
     static int selectIndexQuocGia = -1;
     static int choiceQuocGia;
-    EditText edtTacGia;
-
-    ArrayList<Integer> selectedIndices = new ArrayList<>();
-    Phim u = new Phim();
     static int selectIndexTheLoai = -1;
     static String stringTheLoai = "";
     static String stringQuocGia = "";
     static int choiceTheLoai;
+    Button btnThem, btnXoa, btnSua, btnHienThi;
+    TextView tvQuocGia, tvTheloai;
+    EditText edtTacGia;
+    ArrayList<Integer> selectedIndices = new ArrayList<>();
+    Phim u = new Phim();
     boolean[] selectedItems;
     TextView tvChoiceXuatChieu;
     GridView gvListPhim;
@@ -92,7 +89,7 @@ public class AdminPhim extends AppCompatActivity {
         edtTacGia = findViewById(R.id.edtTacGia);
         edtThoiLuongPhim = findViewById(R.id.edtThoiLuongPhim);
         tvQuocGia = findViewById(R.id.tvQuocGia);
-        tvTheloai =  findViewById(R.id.tvTheloai);
+        tvTheloai = findViewById(R.id.tvTheloai);
         ibtnUpFile = findViewById(R.id.ibtnUpFile);
         tvChoiceXuatChieu = findViewById(R.id.tvChoiceXuatChieu);
         // Khởi tạo các biến
@@ -164,8 +161,8 @@ public class AdminPhim extends AppCompatActivity {
                 } else {
                     Toast.makeText(AdminPhim.this, "Thêm phim Thành công !", Toast.LENGTH_SHORT).show();
                     // sau khi thêm thành công mới thêm vào bảng nhìu nhìu PhimXuat
-                    for(int i = 0; i < selectedIndices.size(); i++ ){
-                        PhimXuatDao.insertPhimXuat(new PhimXuat(0, phimDao.getIdLastedPhim(),selectedIndices.get(i)));
+                    for (int i = 0; i < selectedIndices.size(); i++) {
+                        PhimXuatDao.insertPhimXuat(new PhimXuat(0, phimDao.getIdLastedPhim(), selectedIndices.get(i)));
                     }
                     edtTenPhim.setText(null);
                     edtMoTa.setText(null);
@@ -315,6 +312,7 @@ public class AdminPhim extends AppCompatActivity {
                 List<String> listChoice = MainActivity.database.getTimeXuatChieuOfXuatChieu();
                 selectedItems = new boolean[listChoice.size()];
                 String[] itemsArray = listChoice.toArray(new String[0]);
+                Collections.reverse(Arrays.asList(itemsArray));
                 List<Integer> listMaXuatChieu = XuatChieuDao.getListMaXuatChieu();
                 AlertDialog.Builder builder = new AlertDialog.Builder(AdminPhim.this);
                 builder.setTitle("Thêm xuất chiếu cho phim");
@@ -340,7 +338,7 @@ public class AdminPhim extends AppCompatActivity {
         });
         tvTheloai.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String[] itemsArray = {"Anime","Kinh dị", "Hành động", "Viễn tưởng", "Hoạt hình", "Tình cảm"};
+                String[] itemsArray = {"Anime", "Kinh dị", "Hành động", "Viễn tưởng", "Hoạt hình", "Tình cảm"};
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AdminPhim.this);
                 builder.setTitle(" chọn thể loại phim ");
@@ -372,7 +370,7 @@ public class AdminPhim extends AppCompatActivity {
         });
         tvQuocGia.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String[] itemsArray = {"Việt Nam","Nhật Bản", "Trung Quốc", "Mỹ", "Hàn Quốc", "Thái Lan"};
+                String[] itemsArray = {"Việt Nam", "Nhật Bản", "Trung Quốc", "Mỹ", "Hàn Quốc", "Thái Lan"};
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AdminPhim.this);
                 builder.setTitle(" chọn quốc gia ");

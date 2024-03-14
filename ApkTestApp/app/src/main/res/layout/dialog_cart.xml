@@ -1,47 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/lavender_bkg"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/lavender_bkg">
+    android:padding="16dp">
+
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="600dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:gravity="top">-->
+
+
+    <!--    </LinearLayout>-->
+
+    <Button
+        android:id="@+id/dismiss_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="X"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.978"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Giỏ Hàng"
-        android:textStyle="bold"
+        android:layout_marginTop="52dp"
         android:drawableLeft="@drawable/baseline_shopping_cart_24"
         android:drawablePadding="8dp"
+        android:gravity="center"
+        android:text="Giỏ Hàng"
+        android:textColor="#F44336"
         android:textSize="25sp"
-        android:textColor="#F44336"/>
-    <LinearLayout
-        android:layout_width="600dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="top">
-        <Button
-            android:id="@+id/btnThanhToan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Thanh toán"
-            android:layout_gravity="left"
-           />
-        <Button
-            android:id="@+id/dismiss_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="center"
-            android:text="Đóng" />
-    </LinearLayout>
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.439"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnThanhToan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="108dp"
+        android:text="Thanh toán"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="330dp"-->
+<!--        android:layout_height="402dp"-->
+<!--        android:layout_marginTop="224dp"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
     <ListView
-        android:layout_width="600dp"
+        android:id="@+id/lvCart"
+        android:layout_width="304dp"
         android:layout_height="match_parent"
-        android:id="@+id/lvCart"/>
+        android:layout_marginTop="180dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--    </LinearLayout>-->
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

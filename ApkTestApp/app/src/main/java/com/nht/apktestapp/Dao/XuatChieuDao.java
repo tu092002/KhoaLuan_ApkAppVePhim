@@ -13,13 +13,14 @@ public class XuatChieuDao {
         Cursor c = MainActivity.database.GetData("SELECT XuatChieu.MaXuatChieu " +
                 "FROM XuatChieu");
         list.clear();
-        c.moveToFirst();
-        while(c.isAfterLast() == false){
-            int p = c.getInt(0);
-            list.add(p);
-            c.moveToNext();
+        if (c.moveToFirst()) {
+            do {
+                int p = c.getInt(0);
+                list.add(p);
+            } while (c.moveToNext());
         }
         c.close();
         return list;
+
     }
 }
