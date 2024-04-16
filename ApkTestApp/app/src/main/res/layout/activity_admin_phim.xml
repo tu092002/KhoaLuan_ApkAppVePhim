@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".Admin.AdminPhim"
     android:background="@drawable/lavender_bkg"
-    >
+    android:orientation="vertical"
+    tools:context=".Admin.AdminPhim">
 
 
     <LinearLayout
@@ -39,19 +38,20 @@
 
 
             />
+
         <EditText
             android:id="@+id/edtGiaPhim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Giá phim"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/edtThoiLuongPhim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Thời lượng Phim"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <EditText
             android:id="@+id/edtTacGia"
@@ -74,16 +74,16 @@
             android:hint="Thể loại..." />
 
         <TextView
+            android:id="@+id/tvChoiceXuatChieu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Chọn xuất Chiếu"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:id="@+id/tvChoiceXuatChieu"/>
-<!--        <ListView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:id="@+id/lvChoiceXuatChieu"/>-->
+            android:text="Chọn xuất Chiếu" />
+        <!--        <ListView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="100dp"-->
+        <!--            android:id="@+id/lvChoiceXuatChieu"/>-->
 
 
         <LinearLayout
@@ -153,12 +153,15 @@
         android:id="@+id/gvListPhim"
         android:layout_width="match_parent"
         android:layout_height="405dp"
+        android:background="#333"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
         android:numColumns="2"
         android:verticalSpacing="@android:dimen/app_icon_size"
-        android:horizontalSpacing="5dp"
-        android:gravity="center"
-        android:background="#333"
 
 
         />
+
+
+
 </LinearLayout>

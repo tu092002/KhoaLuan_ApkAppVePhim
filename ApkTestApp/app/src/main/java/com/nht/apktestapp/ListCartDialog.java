@@ -95,6 +95,7 @@ public class ListCartDialog extends Dialog {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
                         }
+
                     });
                     AlertDialog alertDialog = dialog.create();
                     alertDialog.show();
@@ -146,7 +147,7 @@ public class ListCartDialog extends Dialog {
                             lvCart.invalidate();
 
                         }
-                        else{
+                        else {
                             Toast.makeText(getContext(), "Bạn đã thanh toán thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }

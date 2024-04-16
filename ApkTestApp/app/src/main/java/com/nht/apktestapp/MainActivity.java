@@ -18,6 +18,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
 
     public static Database database;
     public static SQLiteDatabase sqLiteDatabase;
+    Spinner spinner;
 
 //    TextView tvSearchPhim;
     AutoCompleteTextView actvSearchPhim;
@@ -81,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // kiểm tra xem user đã đăng nhập chưa để hiển thị menu cho đúng
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
 
 // Tạo database
@@ -98,12 +103,22 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
 
 
 //         Hiển thị dữ liệu
-        list.clear();// xóa hết nội dung trong list
-        list = phimDao.getAllPhimToString();
-        adapter = new PhimAdapter(context, R.layout.activity_item_phim, list);
-        gvListPhimMain = (GridView) findViewById(R.id.gvListPhimMain);
-        gvListPhimMain.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        try{
+            progressBar.setVisibility(View.VISIBLE);
+            list.clear();// xóa hết nội dung trong list
+            list = phimDao.getAllPhimToString();
+            adapter = new PhimAdapter(context, R.layout.activity_item_phim, list);
+            gvListPhimMain = (GridView) findViewById(R.id.gvListPhimMain);
+            gvListPhimMain.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
+
+        }
+        catch (Exception ex){
+            progressBar.setVisibility(View.VISIBLE);
+
+        }
+
         gvListPhimMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -243,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
         //Khu vực khai báo, tạo viewFlipper
         list =  phimDao.getAllPhimToString();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 0; i++) {
             // Lấy tham chiếu đến ImageView và gắn hình ảnh cho nó
             ImageView imageView = findViewById(getResources().getIdentifier("imgv" + (i + 1), "id", getPackageName()));
 //            imageView.setImageResource(list.get(i).getImgPhim());
@@ -335,6 +350,9 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
         return true;
     }
 
+
+
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -402,32 +420,38 @@ public class MainActivity extends AppCompatActivity implements OnDialogDismissLi
                 LocalDateTime timeStartPhim = LocalDateTime.parse(i,formatter);
                 LocalDateTime timeEndPhim = timeStartPhim.plusMinutes(p.getThoiLuongPhim());
                 // Tính số phút từ thời điểm hiện tại đến thời điểm cho trước
+
+                Timer timer = new Timer();
+                timer.schedule(new DatabaseUpdateGhe(timeEndPhim), 0, 1000); // Run every minute
 //            Duration duration = Duration.between(now, timeEndPhim);
 //            long minutes = duration.toMinutes();
-                Timer timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        // Thực hiện tác vụ xử lý dữ liệu ở đây
-                        LocalDateTime now = LocalDateTime.now();
+//                Timer timer = new Timer();
+//                timer.schedule(new TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        // Thực hiện tác vụ xử lý dữ liệu ở đây
+//                        LocalDateTime now = LocalDateTime.now();
+//
+//                        if(Duration.between(now,timeEndPhim).toMinutes()  == 0 ){
+//                            MainActivity.database.Querydata("UPDATE Ghe SET empty = 'true' ");
+//
+//                        }
+//                    }
+//                }, 0, 60 * 1000); // Chạy mỗi phút
 
-                        if(Duration.between(now,timeEndPhim).toMinutes()  == 0 ){
-                            MainActivity.database.Querydata("UPDATE Ghe SET empty = 'true' ");
-
-                        }
-                    }
-                }, 0, 60 * 1000); // Chạy mỗi phút
 
             }
         }
 
 
     }
+
 //
 //    @Override
 //    public void onPointerCaptureChanged(boolean hasCapture) {
 //        super.onPointerCaptureChanged(hasCapture);
 //    }
 //    //
+
 
 }
