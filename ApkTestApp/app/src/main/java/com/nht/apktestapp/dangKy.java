@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,8 @@ import com.nht.apktestapp.Model.User;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -88,6 +91,7 @@ public class dangKy extends AppCompatActivity {
                 String hoTen = edtHoTen.getText().toString();
                 String username = edtUsername.getText().toString();
                 String password = edtPassword.getText().toString();
+//                password = SHA256(password);
                 String role = edtRole.getText().toString();
                 if (TextUtils.isEmpty(hoTen) || TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
                     Toast.makeText(dangKy.this, "Bạn chưa nhập đủ thông tin  !", Toast.LENGTH_SHORT).show();
@@ -95,6 +99,14 @@ public class dangKy extends AppCompatActivity {
                 }
                 if (MainActivity.database.isUsernameExists(username) == true) {
                     Toast.makeText(dangKy.this, "Username đã có người sử dụng, Vui lòng chọn Username khác !", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(username.length() < 8  || username.length() > 15) {
+                    Toast.makeText(dangKy.this, "Độ dài username không đạt yêu cầu !", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if( password.length() < 8 || username.length() > 15) {
+                    Toast.makeText(dangKy.this, "Độ dài password không đạt yêu cầu !", Toast.LENGTH_SHORT).show();
                     return;
                 }
 //                Drawable myDrawable = getResources().getDrawable(R.drawable.baseline_image_24, getTheme());
@@ -111,7 +123,9 @@ public class dangKy extends AppCompatActivity {
                     u.setMaUser(0);
                     u.setHoTen(edtHoTen.getText().toString());
                     u.setUsername(edtUsername.getText().toString());
-                    u.setPassword(edtPassword.getText().toString());
+                     password = encryptPassword(password); // Mã hóa mật khẩu trước khi lưu
+
+                    u.setPassword(password);
                     u.setRole(edtRole.getText().toString());
                     u.setAvt(hinhAnh);
                     u.setOnline(online);
@@ -136,6 +150,34 @@ public class dangKy extends AppCompatActivity {
 
     }
     //mã hóa mật khẩu
+    public static final String SHA256(final String s) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(s.getBytes("UTF-8"));
+            StringBuilder hexString = new StringBuilder();
+            for (byte aHash : hash) {
+                String hex = Integer.toHexString(0xff & aHash);
+                while (hex.length() < 2) {
+                    hex = "0" + hex;
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+    public static String encryptPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            return Base64.encodeToString(encodedHash, Base64.DEFAULT);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static String md5(String text) {
         MessageDigest digest = null;
         try {

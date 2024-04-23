@@ -1,5 +1,7 @@
 package com.nht.apktestapp;
 
+import static com.nht.apktestapp.dangKy.SHA256;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
@@ -377,7 +379,7 @@ public class Database extends SQLiteOpenHelper {
         User user = new User();
 
         String selectQuery = "SELECT * FROM " + TB_User + " WHERE " + TB_User_UserName + " = '" + username + "' AND "
-                + TB_User_Password + " = '" + password + "'";
+                + TB_User_Password + " = '" + dangKy.encryptPassword(password) + "'";
         Cursor cursor = MainActivity.database.GetData(selectQuery);
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -443,11 +445,22 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public Boolean checkLogin(String username, String password) {
-        SQLiteDatabase MyDatabase = this.getWritableDatabase();
-        Cursor cursor = MyDatabase.rawQuery("Select * from User where Username = ? and Password = ?", new String[]{username, password});
-        if (cursor.getCount() > 0)
+//        SQLiteDatabase MyDatabase = this.getWritableDatabase();
+//        Cursor cursor = MyDatabase.rawQuery("Select * from User where Username = ? and Password = ?", new String[]{username, password});
+//        if (cursor.getCount() > 0)
+//            return true;
+//        return false;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String encryptedPassword = dangKy.encryptPassword(password);
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE Username = ? AND Password = ?", new String[]{username, encryptedPassword});
+        if (cursor.getCount() > 0) {
+            cursor.close();
             return true;
-        return false;
+        } else {
+            cursor.close();
+            return false;
+        }
     }
 
     public List<String> getImageUrlsFromDatabase() {
